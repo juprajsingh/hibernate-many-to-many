@@ -1,10 +1,17 @@
 package com.luv2code.hibernate.demo.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +31,16 @@ public class Student {
 	
 	@Column(name="email")
 	private String email;
+	
+	@ManyToOne(fetch=FetchType.LAZY,
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinTable(
+		name="course_student",
+		joinColumns=@JoinColumn(name="student_id"),
+		inverseJoinColumns=@JoinColumn(name="course_id")
+			)
+	private List<Course> courses;
 	
 	public Student() {
 			
@@ -66,6 +83,14 @@ public class Student {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 
 	@Override
