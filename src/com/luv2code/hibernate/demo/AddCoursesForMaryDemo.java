@@ -53,7 +53,6 @@ public class AddCoursesForMaryDemo {
 				session.save(tempCourse1);
 				session.save(tempCourse2);
 
-				
 				// commit transaction 
 				session.getTransaction().commit();
 				
